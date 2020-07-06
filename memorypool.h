@@ -6,6 +6,9 @@
 #include <string.h>
 #include <stdbool.h>
 
+
+#define GETDATASRCADDR(obj)   (uint8_t *)((uint32_t)obj + sizeof(MemPool_ObjectHeader_t))
+#define GETNEXTOBJ(obj)		  (obj->DataSize != 0)?(MemPool_ObjectHeader_t*)((uint32_t)obj + obj->DataSize + sizeof(MemPool_ObjectHeader_t)):obj
 typedef enum
 {
 	MemP_NULL,
@@ -38,12 +41,12 @@ typedef struct
 	void * Addr;
 	uint32_t Size;
 	uint32_t LastObjectIdx;
+
 } MemPool_t;
 
 typedef struct
 {
 	uint16_t DataSize;
-	uint8_t Flag;
 } MemPool_ObjectHeader_t;
 
 
